@@ -11,7 +11,7 @@ int main(){
     constexpr unsigned int width = 20;
     constexpr unsigned int height = 15;
     constexpr unsigned int numberOfNeurons = 20;    // minimum is 6 neurons
-    constexpr unsigned int totalNumberOfGenerations = 20000;
+    constexpr unsigned int totalNumberOfGenerations = 1000;
     constexpr unsigned int timeStepsPerGenerarion = 40;
     constexpr unsigned int numberOfCreatures = 20;
     typedef ContinuousNeuron myNeuronType;
@@ -45,6 +45,7 @@ int main(){
             c->y = c->yBegin = distHeight(gen);
         }
         for(int loop=0; loop<timeStepsPerGenerarion; ++loop){
+	// change modulo if you want to see simulation progress more / less often
             if(!((generation+1)%100)){
                 clearAndfillBoard(board, width, height, population);
                 printBoard(board, width, height, true, 50000);
@@ -56,6 +57,7 @@ int main(){
                 // push forward in time step
                 c->brain->forward();
                 // number - 3 or/and -4 == optional stop neuron
+		// treat 2 last neurons as an x and y output 
                 c->x += move(c->brain->neurons[numberOfNeurons-2], c->x, width, NULL);
                 c->y += move(c->brain->neurons[numberOfNeurons-1], c->y, height, NULL);
             }
